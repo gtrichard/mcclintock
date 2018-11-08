@@ -122,7 +122,7 @@ fi
 # Map reads to the augmented genome.
 bwa mem -t $processors -v 0 -R '@RG\tID:'$sample'\tSM:'$sample $ref_masked_aug $fastq1 $fastq2 > $tmp_dir/$sample.sam
 sam=$tmp_dir/$sample.sam
-samtools view -Sb -t $ref_masked_aug".fai" $sam | samtools sort - $tmp_dir/$sample
+samtools view -Sb -t $ref_masked_aug".fai" $sam | samtools sort -@ $processors -o $tmp_dir/$sample.bam
 bam=$tmp_dir/$sample.bam
 samtools index $bam
 
