@@ -22,6 +22,7 @@ usage ()
 	echo "     TE-based coverage analysis will result in longer running time. A fasta file can be provided here for coverage"
 	echo "     analysis. If no file is provided here, the consensus sequences of the TEs will be used for the analysis. [Optional:"
 	echo "     default will not include this]"
+	echo "-D : Retain the sorted and indexed BAM file of the paired end data aligned to the reference genome."
 	echo "-s : A fasta file that will be used for TE-based coverage analysis, if not supplied then the consensus sequences"
 	echo "     of the TEs will be used for the analysis. [Optional]"
 	echo "-b : Retain the sorted and indexed BAM file of the paired end data aligned to the reference genome."
@@ -52,7 +53,7 @@ mcclintock_location="$( cd "$(dirname "$0")" ; pwd -P )"
 cd $mcclintock_location/
 
 # Get the options supplied to the program
-while getopts ":r:c:g:t:s:1:2:o:p:M:m:hiTdbCR" opt;
+while getopts ":r:c:g:t:s:1:2:o:p:M:m:hiTdDbCR" opt;
 do
 	case $opt in
 		r)
@@ -103,6 +104,9 @@ do
 		d)
 			te_cov=on
 			;;
+		D)
+			cov_only=on
+			;;
 		b)
 			save_bam=on
 			;;
@@ -149,13 +153,20 @@ printf "\nRunning McClintock version: " | tee -a /dev/stderr
 git rev-parse HEAD | tee -a /dev/stderr
 printf "\n\nDate of run is $date\n\n" | tee -a /dev/stderr
 
-# If only one fastq has been supplied assume this is single ended data and launch only ngs_te_mapper
+# If only one fastq has been supplied assume this is single ended data and launch only ngs_te_mapper and RelocaTE
 single_end="false"
 if [[ "$input1" && -z "$input2" ]]
 then
 	echo "Assuming single ended data and launching only ngs_te_mapper and RelocaTE"
 	methods="ngs_te_mapper RelocaTE"
 	single_end="true"
+fi
+
+# If coverage only option is provided then launch only coverage module
+if [[ "$cov_only" == "on" ]]
+then
+	echo "Coverage only option is provided and launching only coverage module"
+	methods=""
 fi
 
 genome=${inputr##*/}
@@ -229,7 +240,7 @@ else
 fi
 
 # Coverage analysis for each TE
-if [[ "$te_cov" == "on" ]]
+if [[ "$te_cov" == "on" || "$cov_only" == "on"  ]]
 then
 	printf "\nCalculating normalized average coverage for TEs...\n\n" | tee -a /dev/stderr
 	if [[ "$inputff" ]]
