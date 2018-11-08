@@ -548,7 +548,7 @@ then
 		shopt -u nocasematch
 		# Create bam files for input
 		printf "\nCreating bam alignment files...\n\n" | tee -a /dev/stderr
-		samtools view -Sb -t $reference_genome".fai" $sam | samtools sort - $samplefolder/bam/$sample
+		samtools view -Sb -t $reference_genome".fai" $sam | samtools sort -@ processors -o $samplefolder/bam/$sample.bam
 		bam=$samplefolder/bam/$sample.bam
 		samtools index $bam
 
@@ -874,7 +874,7 @@ then
 		bedtools complement -i $referencefolder/"$genome.fasta.out.zero.all.bed" -g $referencefolder/"$genome.sorted.all.genome" | grep -v "\b0\s*0\b" | grep -v "\s-[0-9]*\b" > $referencefolder/"$genome.fasta.out.complement.all.bed"
 	fi
 	bed_nonte=$referencefolder/"$genome.fasta.out.complement.all.bed"
-	genome_avg_depth=`samtools depth -b  $bed_nonte $bam | awk '{ total += $3 } END { print total/NR }'`
+	genome_avg_depth=`samtools depth -aa -b $bed_nonte $bam | awk '{ total += $3 } END { print total/NR }'`
 	echo "average genome coverage: $genome_avg_depth" >> $report
 fi
 
