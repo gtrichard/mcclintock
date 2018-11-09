@@ -45,6 +45,10 @@ cp scripts/splitforRetroSeq.pl RetroSeq
 
 cp scripts/runrelocate.sh RelocaTE
 patch RelocaTE/scripts/relocaTE_insertionFinder.pl < scripts/relocaTE_insertionFinder.patch
+patch RelocaTE/scripts/sam2bam.pl < scripts/sam2bam.patch
+patch RelocaTE/scripts/merge_bam_shell.pl < scripts/merge_bam_shell.patch
+patch RelocaTE/scripts/process_raw_reads.pl < scripts/process_raw_reads.patch
+patch RelocaTE/scripts/characterizer.pl < scripts/characterizer.patch
 
 cp scripts/runtelocate.sh TE-locate
 # These fixes are now built in to TE-locate
