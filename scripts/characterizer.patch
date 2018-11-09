@@ -1,0 +1,11 @@
+--- characterizer.pl	2014-10-31 20:44:29.000000000 -0400
++++ characterizer.pl.fixed	2018-11-08 21:14:28.000000000 -0500
+@@ -208,7 +208,7 @@
+       open POSSAM, ">$sam";
+       print POSSAM $pos_sam;
+       `samtools view -bT $genome_fasta $sam > $bam`;
+-      `samtools sort $bam $sorted_bam`;
++      `samtools sort $bam -o $sorted_bam.bam`;
+       `samtools index $sorted_bam.bam`;
+ 
+ `samtools mpileup -C50 -ugf $genome_fasta -r $range  $sorted_bam.bam | bcftools view -bvcg - > $cwd/$pos.var.raw.bcf`;

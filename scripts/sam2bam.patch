@@ -1,0 +1,19 @@
+--- sam2bam.pl	2014-10-31 20:44:29.000000000 -0400
++++ sam2bam.pl.fixed	2018-11-08 21:02:26.000000000 -0500
+@@ -13,7 +13,7 @@
+ 
+ if ( -e "$dir_path/$sample.$lowest_dir.sam" ) {
+   `samtools view -b -S -T $genome_path $dir_path/$sample.$lowest_dir.sam >  $dir_path/$sample.$lowest_dir.bam`;
+-  `samtools sort  $dir_path/$sample.$lowest_dir.bam  $dir_path/$sample.$lowest_dir.sorted`;
++  `samtools sort  $dir_path/$sample.$lowest_dir.bam  -o $dir_path/$sample.$lowest_dir.sorted.bam`;
+   `samtools index  $dir_path/$sample.$lowest_dir.sorted.bam`;
+ }
+ else {
+@@ -23,6 +23,6 @@
+ 
+ if ( -e "$dir_path/$sample.$lowest_dir.unPaired.sam" ) {
+   `samtools view -b -S -T $genome_path $dir_path/$sample.$lowest_dir.unPaired.sam >  $dir_path/$sample.$lowest_dir.unPaired.bam`;
+-  `samtools sort  $dir_path/$sample.$lowest_dir.unPaired.bam  $dir_path/$sample.$lowest_dir.unPaired.sorted`;
++  `samtools sort  $dir_path/$sample.$lowest_dir.unPaired.bam  -o $dir_path/$sample.$lowest_dir.unPaired.sorted.bam`;
+   `samtools index  $dir_path/$sample.$lowest_dir.unPaired.sorted.bam`;
+ }

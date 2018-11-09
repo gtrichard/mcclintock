@@ -1,0 +1,11 @@
+--- merge_bam_shell.pl	2014-10-31 20:44:29.000000000 -0400
++++ merge_bam_shell.pl.fixed	2018-11-08 21:08:19.000000000 -0500
+@@ -42,7 +42,7 @@
+ 
+ #sort and index merged bam
+ print SH
+-"samtools sort  \$tmp_dir/$lowest_dir.merged.bam  \$tmp_dir/$lowest_dir.merged.sorted\n";
++"samtools sort  \$tmp_dir/$lowest_dir.merged.bam -o \$tmp_dir/$lowest_dir.merged.sorted.bam\n";
+ print SH "samtools index  \$tmp_dir/$lowest_dir.merged.sorted.bam\n";
+ 
+ =cut

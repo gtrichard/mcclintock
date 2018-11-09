@@ -1,0 +1,8 @@
+316c316
+< samtools sort  \$tmp_dir/$sample.unPaired.bam  \$tmp_dir/$sample.unPaired.sorted
+---
+> samtools sort  \$tmp_dir/$sample.unPaired.bam  -o \$tmp_dir/$sample.unPaired.sorted.bam
+328c328
+<     "samtools sort  \$tmp_dir/$sample.bam  \$tmp_dir/$sample.sorted\n";
+---
+>     "samtools sort  \$tmp_dir/$sample.bam  -o \$tmp_dir/$sample.sorted.bam\n";
