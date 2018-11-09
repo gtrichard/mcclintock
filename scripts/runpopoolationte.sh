@@ -44,7 +44,7 @@ then
 	rm $outputfolder/PoPoolationTE/reads2.fastq
 
 	# Sort the alignment and remove intermediate files to save space.
-	samtools view -t $reference_genome".fai" -Sb $outputfolder/PoPoolationTE/pe-reads.sam | samtools sort - $outputfolder/PoPoolationTE/pe-reads.sorted
+	samtools view -t $reference_genome".fai" -Sb $outputfolder/PoPoolationTE/pe-reads.sam | samtools sort -@ processors -o $outputfolder/PoPoolationTE/pe-reads.sorted.bam
 	rm $outputfolder/PoPoolationTE/pe-reads.sam
 	samtools view $outputfolder/PoPoolationTE/pe-reads.sorted.bam > $outputfolder/PoPoolationTE/pe-reads.sorted.sam
 
