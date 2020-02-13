@@ -86,7 +86,7 @@ conda config --add channels bioconda
 ```
 3. Install dependencies with conda by clone the McClintock repository, cd into the project directory and run the script install.sh with no arguments, the installation might take a while to finish.
 ```
-git clone git@github.com:bergmanlab/mcclintock.git
+git clone https://github.com/bergmanlab/mcclintock
 cd mcclintock
 sh env_install.sh
 ```
